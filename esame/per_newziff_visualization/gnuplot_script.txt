@@ -1,0 +1,17 @@
+reset
+set term png size 700,700
+set size ratio 1
+unset key
+unset border
+unset tics
+do for [in=0:L]{
+set arrow nohead front from in -0.5,-0.5 to in-0.5,L-0.5
+set arrow nohead front from -0.5,in-0.5 to L-0.5,in-0.5
+}
+N=L*L - 1;
+do for[in=0:N]{
+set output sprintf("evolution/lattice%004.f.png", in)
+plot "lattice.txt" i in u ($1):($2):(0.5):(0.5):($3) w boxxyerrorbar fill solid lc var
+}
+reset
+set term qt
